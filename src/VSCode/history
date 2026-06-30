@@ -1,0 +1,19 @@
+cd /mnt/chromeos/removable/big/uni/bac/
+ls
+cp .ssh.tgz ~
+cd ..
+cd mirror./pkg/Debian/
+ls`
+cp build-essential.tgz ~
+cp cmake.tgz ~
+cp vscode-dependency.tgz ~
+cd /mnt/chromeos/removable/big/uni/mirror./IDE/VSCode/arm64/
+ls
+cp code_1.126.0-1782208023_arm64.deb ~
+cp Extension/vscode-cpptools.tgz ~
+cd
+ls
+tar xfvz build-essential.tgz 
+tar xfvz cmake.tgz 
+tar xfvz vscode-cpptools.tgz 
+tar xfvz vscode-dependency.tgz
