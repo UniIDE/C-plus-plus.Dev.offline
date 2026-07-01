@@ -5,6 +5,7 @@ copy_mirror(){
 
 	cp build-essential.tgz ~
 	cp cmake.tgz ~
+	cp gdb.tgz ~
 	cp vscode-dependency.tgz ~
 }
 
@@ -12,6 +13,7 @@ extract_dependency(){
 	cd ~
 	tar xfvz build-essential.tgz
 	tar xfvz cmake.tgz
+	tar xfvz gdb.tgz
 	tar xfvz vscode-dependency.tgz
 }
 
@@ -24,6 +26,9 @@ install_dependency(){
 	install_deb
 
 	cd ~/cmake
+	install_deb
+
+	cd ~/gdb
 	install_deb
 
 	cd ~/vscode-dependency
@@ -42,8 +47,8 @@ extension(){
 }
 
 cleanup(){
-	rm -r ~/{build-essential,cmake,vscode-dependency,vscode-cpptools}.tgz
-	rm -r ~/{build-essential,cmake,vscode-dependency}/
+	rm -r ~/{build-essential,cmake,gdb,vscode-dependency,vscode-cpptools}.tgz
+	rm -r ~/{build-essential,cmake,gdb,vscode-dependency}/
 }
 
 main(){
