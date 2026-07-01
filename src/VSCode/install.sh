@@ -1,19 +1,62 @@
-arch=arm64
+. lib/var.sh
 
-cd /mnt/chromeos/removable/big/uni/mirror./IDE/VSCode/$arch
+copy_mirror(){
+	cd $pkg_dir
 
-sudo dpkg -i code_*.deb
+	cp build-essential.tgz ~
+	cp cmake.tgz ~
+	cp vscode-dependency.tgz ~
+}
 
-cd /mnt/chromeos/removable/big/uni/mirror./pkg/Debian
-cp build-essential.tgz ~
-cp cmake.tgz ~
+extract_dependency(){
+	cd ~
+	tar xfvz build-essential.tgz
+	tar xfvz cmake.tgz
+	tar xfvz vscode-dependency.tgz
+}
 
-tar xfvz {build-essential, cmake}.tgz
+install_deb(){
+	sudo dpkg -i *.deb
+}
 
-cd cmake
-sudo dpkg -i *.deb
-cd ..
+install_dependency(){
+	cd ~/build-essential
+	install_deb
 
-cd build-essential
-sudo dpkg -i *.deb
-cd ..
+	cd ~/cmake
+	install_deb
+
+	cd ~/vscode-dependency
+	install_deb
+}
+
+install_vscode(){
+	cd $vscode_dir
+	sudo dpkg -i code_*.deb
+}
+
+extension(){
+	cp $vscode_dir/Extension/vscode-cpptools.tgz ~
+	cd ~
+	tar xfvz vscode-cpptools.tgz 
+}
+
+cleanup(){
+	rm -r ~/{build-essential,cmake,vscode-dependency,vscode-cpptools}.tgz
+	rm -r ~/{build-essential,cmake,vscode-dependency}/
+}
+
+main(){
+	if ! command -v gcc &> /dev/null;then
+		copy_mirror
+		extract_dependency
+		install_dependency
+	fi
+	if ! command -v code &> /dev/null;then
+		install_vscode
+	fi
+	extension
+	cleanup
+}
+
+main
